@@ -1,13 +1,16 @@
-import axios from "axios";
-import type { Menu } from "../types/Menu";
+import api from "./axios";
 
-interface FetchMenuParams {
+export interface MenuListParams {
     menuCategory?: string;
     releaseStatus?: string;
 }
 
-export function fetchMenuList(params: FetchMenuParams) {
-    return axios.get<Menu[]>("/api/menu/menuList", {
+/**
+ * 메뉴 목록 조회
+ * GET /api/menu/menuList
+ */
+export const fetchMenuList = (params?: MenuListParams) => {
+    return api.get("/api/menu/menuList", {
         params,
     });
-}
+};

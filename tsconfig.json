@@ -6,12 +6,3 @@
   ]
 }
 
-{
-  "compilerOptions": {
-    "baseUrl": "src",
-    "paths": {
-      "types/*": ["types/*"]
-    }
-  },
-  "include": ["src"]
-}
