@@ -33,7 +33,7 @@ const Menus: MenuGroup[] = [
     title: "메뉴",
     subMenus: [
       m("메뉴 등록", ""),
-      m("메뉴 조회", "")
+      m("메뉴 조회", "/menu")
     ]
   },
   {
