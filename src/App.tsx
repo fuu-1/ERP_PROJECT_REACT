@@ -1,4 +1,3 @@
-// App.tsx
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layout/MainLayout";
 import Sales from "./pages/sales/Sales";
