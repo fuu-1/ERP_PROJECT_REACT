@@ -1,28 +1,33 @@
-import { useEffect, useState } from "react";
-import {fetchStoreList, type StoreListParams} from "../../api/storeApi";
+import { useState } from "react";
+import { fetchStoreList, type StoreListParams } from "../../api/storeApi";
 import StoreList from "./StoreList";
 import PageContainer from "../../layout/PageContainer";
 import type { Store } from "../../types/Store";
-import StoreMap from "./StoreMap.tsx";
+import StoreMap from "./StoreMap";
 
 const StoreListPage = () => {
-    const [storeStatus, setStoreStatus] = useState("all");
-    const [searchType, setSearchType] = useState("region");
+    const [storeStatus, setStoreStatus] = useState<"all" | "영업중" | "오픈준비" | "폐업">("all");
+    const [searchType, setSearchType] = useState<"region" | "storename" | "manager">("region");
     const [keyword, setKeyword] = useState("");
     const [storeList, setStoreList] = useState<Store[]>([]);
 
-    useEffect(() => {
-        const params: StoreListParams  = { page: 0 };
+    const handleSearch = () => {
+        const params: StoreListParams = { page: 0 };
 
-        if (storeStatus !== "all") params.storeStatus = storeStatus;
-        if (searchType === "region") params.address = keyword;
-        if (searchType === "storename") params.storeName = keyword;
-        if (searchType === "manager") params.managerName = keyword;
+        if (storeStatus !== "all") {
+            params.storeStatus = storeStatus;
+        }
+
+        if (keyword.trim() !== "") {
+            if (searchType === "region") params.address = keyword;
+            if (searchType === "storename") params.storeName = keyword;
+            if (searchType === "manager") params.managerName = keyword;
+        }
 
         fetchStoreList(params)
             .then(res => setStoreList(res.data.content))
             .catch(() => setStoreList([]));
-    }, [storeStatus, searchType, keyword]);
+    };
 
     return (
         <PageContainer title="직영점 목록 조회">
@@ -36,6 +41,7 @@ const StoreListPage = () => {
                         onChangeStoreStatus={setStoreStatus}
                         onChangeSearchType={setSearchType}
                         onChangeKeyword={setKeyword}
+                        onSearch={handleSearch}
                     />
                 </div>
 

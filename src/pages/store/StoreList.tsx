@@ -1,13 +1,14 @@
 import type { Store } from "../../types/Store";
 
 type Props = {
-  storeStatus: string;
-  searchType: string;
+  storeStatus: "all" | "영업중" | "오픈준비" | "폐업";
+  searchType: "region" | "storename" | "manager";
   keyword: string;
   storeList: Store[];
-  onChangeStoreStatus: (v: string) => void;
-  onChangeSearchType: (v: string) => void;
+  onChangeStoreStatus: (v: Props["storeStatus"]) => void;
+  onChangeSearchType: (v: Props["searchType"]) => void;
   onChangeKeyword: (v: string) => void;
+  onSearch: () => void;
 };
 
 const StoreList = (props: Props) => {
@@ -18,7 +19,9 @@ const StoreList = (props: Props) => {
           <select
               className="form-select w-auto"
               value={props.storeStatus}
-              onChange={e => props.onChangeStoreStatus(e.target.value)}
+              onChange={e =>
+                  props.onChangeStoreStatus(e.target.value as Props["storeStatus"])
+              }
           >
             <option value="all">전체</option>
             <option value="영업중">영업중</option>
@@ -29,7 +32,9 @@ const StoreList = (props: Props) => {
           <select
               className="form-select w-auto"
               value={props.searchType}
-              onChange={e => props.onChangeSearchType(e.target.value)}
+              onChange={e =>
+                  props.onChangeSearchType(e.target.value as Props["searchType"])
+              }
           >
             <option value="region">지역</option>
             <option value="storename">직영점명</option>
@@ -42,6 +47,13 @@ const StoreList = (props: Props) => {
               onChange={e => props.onChangeKeyword(e.target.value)}
               placeholder="검색어 입력"
           />
+
+          <button
+              className="btn btn-custom-yellow"
+              onClick={props.onSearch}
+          >
+            검색
+          </button>
         </div>
 
         {/* 목록 */}
