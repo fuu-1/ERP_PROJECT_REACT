@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchMenuList } from "../../api/menuApi";
 import { groupByMenuCode } from "./utils/MenuGroup";
 import MenuList from "./MenuList";
+import PageContainer from "../../layout/PageContainer";
 import type { Menu } from "types/Menu";
 
 const MenuListPage = () => {
@@ -25,15 +26,17 @@ const MenuListPage = () => {
     );
 
     return (
-        <MenuList
-            groupedMenus={groupedMenus}
-            category={category}
-            releaseStatus={releaseStatus}
-            viewMode={viewMode}
-            onChangeCategory={setCategory}
-            onChangeReleaseStatus={setReleaseStatus}
-            onChangeViewMode={setViewMode}
-        />
+        <PageContainer title="메뉴 조회">
+            <MenuList
+                groupedMenus={groupedMenus}
+                category={category}
+                releaseStatus={releaseStatus}
+                viewMode={viewMode}
+                onChangeCategory={setCategory}
+                onChangeReleaseStatus={setReleaseStatus}
+                onChangeViewMode={setViewMode}
+            />
+        </PageContainer>
     );
 };
 

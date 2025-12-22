@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import type { GroupedMenu } from "./utils/MenuGroup";
-import "./Menu.css";
 
 type Props = {
   groupedMenus: GroupedMenu[];
@@ -12,155 +11,107 @@ type Props = {
   onChangeViewMode: (v: "list" | "image") => void;
 };
 
-const MenuList = (props : Props) => {
+const MenuList = (props: Props) => {
   return (
-      <div className="container mt-5">
-        <div className="bg-white border rounded p-4">
-          <h2 className="fw-bold mb-4">메뉴 조회</h2>
+      <>
+        <div className="d-flex align-items-center gap-4 mb-3">
+          <select
+              className="form-select w-auto"
+              value={props.category}
+              onChange={e => props.onChangeCategory(e.target.value)}
+          >
+            <option value="">전체</option>
+            <option value="피자">피자</option>
+            <option value="사이드디시">사이드디시</option>
+            <option value="음료">음료</option>
+            <option value="기타">기타</option>
+          </select>
 
-          <div className="d-flex align-items-center gap-4 mb-3">
-            <div>
-              <label className="fw-semibold me-2">카테고리</label>
-              <select
-                  className="form-select d-inline-block w-auto"
-                  value={props.category}
-                  onChange={(e) => props.onChangeCategory(e.target.value)}
-              >
-                <option value="">전체</option>
-                <option value="피자">피자</option>
-                <option value="사이드디시">사이드디시</option>
-                <option value="음료">음료</option>
-                <option value="기타">기타</option>
-              </select>
-            </div>
+          <select
+              className="form-select w-auto"
+              value={props.releaseStatus}
+              onChange={e => props.onChangeReleaseStatus(e.target.value)}
+          >
+            <option value="">전체</option>
+            <option value="출시 중">출시 중</option>
+            <option value="출시 예정">출시 예정</option>
+            <option value="출시 중단">출시 중단</option>
+          </select>
 
-            <div>
-              <label className="fw-semibold me-2">출시 상태</label>
-              <select
-                  className="form-select d-inline-block w-auto"
-                  value={props.releaseStatus}
-                  onChange={(e) => props.onChangeReleaseStatus(e.target.value)}
-              >
-                <option value="">전체</option>
-                <option value="출시 중">출시 중</option>
-                <option value="출시 예정">출시 예정</option>
-                <option value="출시 중단">출시 중단</option>
-              </select>
-            </div>
-
-            <div className="ms-auto d-flex align-items-center gap-2">
-              <span className="fw-semibold">보기</span>
-
-              <button
-                  className={
-                    props.viewMode === "list"
-                        ? "btn btn-dark btn-sm"
-                        : "btn btn-outline-dark btn-sm"
-                  }
-                  onClick={() => props.onChangeViewMode("list")}
-              >
-                목록
-              </button>
-
-              <button
-                  className={
-                    props.viewMode === "image"
-                        ? "btn btn-dark btn-sm"
-                        : "btn btn-outline-dark btn-sm"
-                  }
-                  onClick={() => props.onChangeViewMode("image")}
-              >
-                이미지
-              </button>
-            </div>
+          <div className="ms-auto">
+            <button
+                className={`btn btn-sm ${
+                    props.viewMode === "list" ? "btn-dark" : "btn-outline-dark"
+                }`}
+                onClick={() => props.onChangeViewMode("list")}
+            >
+              목록
+            </button>
+            <button
+                className={`btn btn-sm ms-2 ${
+                    props.viewMode === "image" ? "btn-dark" : "btn-outline-dark"
+                }`}
+                onClick={() => props.onChangeViewMode("image")}
+            >
+              이미지
+            </button>
           </div>
-
-          {props.viewMode === "list" && (
-              <table className="table text-center align-middle bg-white">
-                <thead className="table-light">
-                <tr>
-                  <th>카테고리</th>
-                  <th>메뉴 코드</th>
-                  <th>메뉴 명</th>
-                  <th>사이즈</th>
-                  <th>가격</th>
-                  <th>출시 상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                {props.groupedMenus.map((group) => (
-                    <Fragment key={group.menuCode}>
-                      {group.items.map((item, idx) => (
-                          <tr key={item.menuNo}>
-                            {idx === 0 && (
-                                <>
-                                  <td rowSpan={group.items.length}>
-                                    {group.menuCategory}
-                                  </td>
-                                  <td rowSpan={group.items.length}>
-                                    {group.menuCode}
-                                  </td>
-                                  <td rowSpan={group.items.length}>
-                                    {group.menuName}
-                                  </td>
-                                </>
-                            )}
-
-                            <td>{item.size}</td>
-                            <td>{item.menuPrice.toLocaleString()}원</td>
-
-                            {idx === 0 && (
-                                <td rowSpan={group.items.length}>
-                                  {group.releaseStatus}
-                                </td>
-                            )}
-                          </tr>
-                      ))}
-                    </Fragment>
-                ))}
-
-                {props.groupedMenus.length === 0 && (
-                    <tr>
-                      <td colSpan={6} className="text-muted py-4">
-                        조회된 메뉴가 없습니다
-                      </td>
-                    </tr>
-                )}
-                </tbody>
-              </table>
-          )}
-
-          {props.viewMode === "image" && (
-              <div className="row g-3 mt-3">
-                {props.groupedMenus.map((group) => (
-                    <div key={group.menuCode} className="col-6 col-md-3">
-                      <div className="border rounded p-2 bg-white text-center shadow-sm">
-                        <div className="fw-bold mb-2">{group.menuName}</div>
-
-                        <div className="small text-start">
-                          {group.items.map((item) => (
-                              <div
-                                  key={item.menuNo}
-                                  className="d-flex justify-content-between border-bottom py-1"
-                              >
-                                <span>{item.size}</span>
-                                <span>{item.menuPrice.toLocaleString()}원</span>
-                              </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                ))}
-
-                {props.groupedMenus.length === 0 && (
-                    <div className="col-12 text-center text-muted py-5">
-                      조회된 메뉴가 없습니다
-                    </div>
-                )}
-              </div>
-          )}
         </div>
-      </div>
+
+        {props.viewMode === "list" && (
+            <table className="table text-center align-middle">
+              <thead className="table-light">
+              <tr>
+                <th>카테고리</th>
+                <th>코드</th>
+                <th>메뉴명</th>
+                <th>사이즈</th>
+                <th>가격</th>
+                <th>상태</th>
+              </tr>
+              </thead>
+              <tbody>
+              {props.groupedMenus.map(group => (
+                  <Fragment key={group.menuCode}>
+                    {group.items.map((item, idx) => (
+                        <tr key={item.menuNo}>
+                          {idx === 0 && (
+                              <>
+                                <td rowSpan={group.items.length}>{group.menuCategory}</td>
+                                <td rowSpan={group.items.length}>{group.menuCode}</td>
+                                <td rowSpan={group.items.length}>{group.menuName}</td>
+                              </>
+                          )}
+                          <td>{item.size}</td>
+                          <td>{item.menuPrice.toLocaleString()}원</td>
+                          {idx === 0 && (
+                              <td rowSpan={group.items.length}>{group.releaseStatus}</td>
+                          )}
+                        </tr>
+                    ))}
+                  </Fragment>
+              ))}
+              </tbody>
+            </table>
+        )}
+
+        {props.viewMode === "image" && (
+            <div className="row g-3">
+              {props.groupedMenus.map(group => (
+                  <div key={group.menuCode} className="col-6 col-md-3">
+                    <div className="border rounded p-2 text-center">
+                      <div className="fw-bold mb-2">{group.menuName}</div>
+                      {group.items.map(item => (
+                          <div key={item.menuNo}>
+                            {item.size} / {item.menuPrice.toLocaleString()}원
+                          </div>
+                      ))}
+                    </div>
+                  </div>
+              ))}
+            </div>
+        )}
+      </>
   );
 };
 
