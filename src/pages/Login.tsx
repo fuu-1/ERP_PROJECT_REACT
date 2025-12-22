@@ -11,7 +11,6 @@ const Login = () => {
     setError("");
 
     try {
-      // 1️⃣ 로그인 요청 (JWT 발급)
       const res = await api.post(
         "/login",
         {
@@ -25,17 +24,14 @@ const Login = () => {
         }
       );
 
-      // 2️⃣ Authorization 헤더에서 JWT 추출
+
       const token = res.headers.authorization;
       if (!token) {
         setError("로그인 토큰을 받지 못했습니다.");
         return;
       }
-
-      // 3️⃣ 토큰 저장 (axios interceptor에서 사용)
       sessionStorage.setItem("accessToken", token);
 
-      // 4️⃣ 로그인 성공 후 단순 이동 (임시)
       window.location.href = "/";
 
     } catch (e) {
