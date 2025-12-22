@@ -2,22 +2,25 @@ import { useEffect, useRef } from "react";
 import type { Store } from "../../types/Store";
 
 type Props = {
-    storeList: Store[];
+    stores: Store[];
 };
 
-const StoreMap = (props: Props) => {
-    const mapRef = useRef<HTMLDivElement | null>(null);
+const StoreMap = ({ stores }: Props) => {
+    const mapRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        console.log("StoreMap mounted", props.storeList);
-    }, [props.storeList]);
+        if (!mapRef.current) return;
+
+        console.log("StoreMap mounted", stores);
+    }, [stores]);
 
     return (
         <div
             ref={mapRef}
-            className="store-map border rounded"
             style={{ width: "100%", height: 500 }}
+            className="border rounded"
         />
     );
 };
+
 export default StoreMap;

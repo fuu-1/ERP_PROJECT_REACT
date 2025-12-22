@@ -1,0 +1,18 @@
+.page-container {
+    max-width: 1500px;
+    margin: 80px auto 0; /* 툴바 아래 여백 */
+    padding: 0 16px;     /* 모바일 대응 */
+}
+
+.page-box {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 24px;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}

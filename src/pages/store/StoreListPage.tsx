@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchStoreList } from "../../api/storeApi";
+import {fetchStoreList, type StoreListParams} from "../../api/storeApi";
 import StoreList from "./StoreList";
 import PageContainer from "../../layout/PageContainer";
 import type { Store } from "../../types/Store";
+import StoreMap from "./StoreMap.tsx";
 
 const StoreListPage = () => {
     const [storeStatus, setStoreStatus] = useState("all");
@@ -11,7 +12,7 @@ const StoreListPage = () => {
     const [storeList, setStoreList] = useState<Store[]>([]);
 
     useEffect(() => {
-        const params: any = { page: 0 };
+        const params: StoreListParams  = { page: 0 };
 
         if (storeStatus !== "all") params.storeStatus = storeStatus;
         if (searchType === "region") params.address = keyword;
@@ -25,15 +26,23 @@ const StoreListPage = () => {
 
     return (
         <PageContainer title="직영점 목록 조회">
-            <StoreList
-                storeStatus={storeStatus}
-                searchType={searchType}
-                keyword={keyword}
-                storeList={storeList}
-                onChangeStoreStatus={setStoreStatus}
-                onChangeSearchType={setSearchType}
-                onChangeKeyword={setKeyword}
-            />
+            <div className="row">
+                <div className="col-7">
+                    <StoreList
+                        storeStatus={storeStatus}
+                        searchType={searchType}
+                        keyword={keyword}
+                        storeList={storeList}
+                        onChangeStoreStatus={setStoreStatus}
+                        onChangeSearchType={setSearchType}
+                        onChangeKeyword={setKeyword}
+                    />
+                </div>
+
+                <div className="col-5">
+                    <StoreMap stores={storeList} />
+                </div>
+            </div>
         </PageContainer>
     );
 };

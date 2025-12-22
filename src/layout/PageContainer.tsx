@@ -1,3 +1,5 @@
+import "./PageContainer.css";
+
 type Props = {
     title?: string;
     children: React.ReactNode;
@@ -5,9 +7,9 @@ type Props = {
 
 const PageContainer = ({ title, children }: Props) => {
     return (
-        <div className="container mt-5">
-            <div className="bg-white border rounded p-4">
-                {title && <div className="fs-3 fw-bold mb-3">{title}</div>}
+        <div className="page-container">
+            <div className="page-box">
+                {title && <h2 className="page-title">{title}</h2>}
                 {children}
             </div>
         </div>

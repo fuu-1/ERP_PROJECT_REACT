@@ -1,31 +1,9 @@
-
-.store-wrapper {
-    max-width: 1500px;
-    margin: 0 auto;
-    background: #fff;
-}
-
-
-.section-box {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-}
-
 .btn-custom-yellow {
     background-color: #FFEEAA !important;
     border-color: #FFEEAA !important;
-    color: #000 !important;
 }
-
-.btn-custom-yellow:hover {
-    background-color: #F3E292 !important;
-}
-
 
 .store-map {
     width: 100%;
     height: 500px;
-    background: #f8f9fa;
 }
